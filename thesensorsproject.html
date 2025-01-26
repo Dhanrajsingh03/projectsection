@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects Section</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #303f46;
+      font-size: 3em;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+
+    /* Dropdown container style */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      width: 300px;
+    }
+
+    .dropdown button {
+      background-color: #0078d4;
+      color: white;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .dropdown button:hover {
+      background-color: #005a9c;
+      transform: scale(1.05);
+    }
+
+    /* Dropdown Content */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      top: 60px;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .dropdown.open .dropdown-content {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      top: 70px;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      border-bottom: 1px solid #f1f1f1;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #0078d4;
+      color: white;
+    }
+
+    /* Search input */
+    .dropdown-content input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      width: 90%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .dropdown-content input[type="text"]:focus {
+      border-color: #0078d4;
+    }
+
+    /* Projects section */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.2);
+      filter: brightness(0.9);
+    }
+
+    .card h3 {
+      font-size: 1.5em;
+      margin: 15px 0;
+      color: #303f46;
+    }
+
+    .card p {
+      font-size: 1.1em;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    .card .btn {
+      background-color: #0078d4;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      display: inline-block;
+    }
+
+    .card .btn:hover {
+      background-color: #005a9c;
+      transform: translateY(-2px);
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>My Projects</h1>
+
+    <!-- Dropdown with search functionality -->
+    <div class="dropdown">
+      <button onclick="toggleDropdown()">Choose a Project Type</button>
+      <div class="dropdown-content">
+        <input type="text" id="searchInput" placeholder="Search project types...">
+        <a href="#" data-project="web">Web Development</a>
+        <a href="#" data-project="mobile">Mobile App Development</a>
+        <a href="#" data-project="data">Data Science</a>
+        <a href="#" data-project="ai">Artificial Intelligence</a>
+      </div>
+    </div>
+
+    <!-- Projects Cards Display -->
+    <div id="projectCards" class="projects">
+      <p>Select a project type to see related projects displayed as cards.</p>
+    </div>
+  </div>
+
+  <script>
+    const projectLinks = document.querySelectorAll('.dropdown-content a');
+    const projectCards = document.getElementById('projectCards');
+    const searchInput = document.getElementById('searchInput');
+    const dropdown = document.querySelector('.dropdown');
+
+    const projectData = {
+      web: [
+        { title: "Portfolio Website", description: "A personal portfolio to showcase your work.", image: "https://www.rolandberger.com/img/og/Roland_Berger-24_2195_Humanoid_robots-OG.jpg" },
+        { title: "E-commerce Site", description: "An online store with product listings and a shopping cart.", image: "https://via.placeholder.com/280x180?text=E-commerce" },
+        { title: "Blog Platform", description: "A blogging platform with user authentication.", image: "https://via.placeholder.com/280x180?text=Blog" }
+      ],
+      mobile: [
+        { title: "Weather App", description: "A mobile app to display real-time weather data.", image: "https://via.placeholder.com/280x180?text=Weather+App" },
+        { title: "Task Manager", description: "An app to manage daily tasks and to-dos.", image: "https://via.placeholder.com/280x180?text=Task+Manager" },
+        { title: "Fitness Tracker", description: "An app to track workouts and health metrics.", image: "https://via.placeholder.com/280x180?text=Fitness+Tracker" }
+      ],
+      data: [
+        { title: "Data Visualization Dashboard", description: "Interactive charts and graphs for data insights.", image: "https://via.placeholder.com/280x180?text=Data+Visualization" },
+        { title: "Predictive Analytics", description: "A project using machine learning to predict trends.", image: "https://via.placeholder.com/280x180?text=Predictive+Analytics" },
+        { title: "Data Cleaning Tool", description: "Automated tools for cleaning and organizing datasets.", image: "https://via.placeholder.com/280x180?text=Data+Cleaning" }
+      ],
+      ai: [
+        { title: "Chatbot", description: "An AI-powered chatbot for customer support.", image: "https://via.placeholder.com/280x180?text=Chatbot" },
+        { title: "Image Recognition", description: "An AI system to identify objects in images.", image: "https://via.placeholder.com/280x180?text=Image+Recognition" },
+        { title: "Recommendation Engine", description: "An AI-based recommendation system for e-commerce.", image: "https://via.placeholder.com/280x180?text=Recommendation+Engine" }
+      ]
+    };
+
+    // Toggle dropdown visibility
+    function toggleDropdown() {
+      dropdown.classList.toggle('open');
+    }
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', function (event) {
+      if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+
+    projectLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const projectType = e.target.getAttribute('data-project');
+        const projects = projectData[projectType];
+
+        if (projects) {
+          projectCards.innerHTML = projects.map(project => `
+                        <div class="card">
+                            <img src="${project.image}" alt="${project.title}">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            <a href="#" class="btn">More Info</a>
+                        </div>
+                    `).join('');
+        } else {
+          projectCards.innerHTML = "<p>No projects available for the selected type.</p>";
+        }
+      });
+    });
+
+    // Filter projects based on search input
+    searchInput.addEventListener('input', (e) => {
+      const searchValue = e.target.value.toLowerCase();
+      const filteredLinks = Array.from(projectLinks).filter(link =>
+        link.textContent.toLowerCase().includes(searchValue)
+      );
+
+      // Hide all links first
+      projectLinks.forEach(link => link.style.display = 'none');
+
+      // Display filtered links
+      filteredLinks.forEach(link => link.style.display = 'block');
+    });
+  </script>
+</body>
+
+</html>
